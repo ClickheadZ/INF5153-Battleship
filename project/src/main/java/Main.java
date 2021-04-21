@@ -1,3 +1,5 @@
+import controllers.*;
+
 import java.io.IOException;
 
 /**
@@ -21,6 +23,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
+        IoHandler.printOpening();
         // Repeatedly ask user for file type until they pick a valid one
         while(true) {
             System.out.print("Please select the type of file where logs will be stored " +
@@ -29,7 +32,7 @@ public class Main {
             if(IoHandler.chooseFileType()) {
                 break;
             } else {
-                System.out.println("Format ERROR.");
+                System.out.println("- FORMAT ERROR -");
             }
         }
 
@@ -40,13 +43,15 @@ public class Main {
             System.out.print("Select a difficulty level (e = easy, m = medium, h = hard) : ");
 
             difficulty = IoHandler.chooseDifficulty();
-            if(difficulty != 0) {
+            if (difficulty != 0) {
                 break;
             } else {
-                System.out.println("Format ERROR.");
+                System.out.println("- FORMAT ERROR -");
             }
         }
 
-
+        // Start the Placement Phase of the game
+        Player humanPlayer = new Player();
+        Player aiPlayer = new Player();
     }
 }

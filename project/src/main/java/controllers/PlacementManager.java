@@ -29,6 +29,20 @@ public class PlacementManager {
     }
 
     public static void placeMines(Player player, boolean randomly) throws IOException {
+        for(int i=0; i<5; ++i) {
+            String position;
 
+            if(randomly) {
+                position = Ai.selectRandomPosition();
+            } else {
+                System.out.print("Select where you want to place your " +
+                        player.boats[i].getName() + " : ");
+                position = IoHandler.getInput();
+            }
+
+            if(!player.placeMine(position)) {
+                --i;
+            }
+        }
     }
 }

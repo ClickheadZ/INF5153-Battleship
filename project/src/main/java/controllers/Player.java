@@ -35,6 +35,7 @@ public class Player {
 
         // Input validation
         // TODO : Pass on all this input validation to IoHandler to improve clarity?
+        // TODO : Make Position and Placement actual objects??
         if(splitPlacement[0].charAt(0) == 'v') {
             vertical = true;
         } else if (splitPlacement[0].charAt(0) == 'h') {
@@ -69,5 +70,16 @@ public class Player {
         int size = boats[boatId].getSize();
 
         return playerGrid.placeBoatTiles(size, boatId, vertical, colString, rowString);
+    }
+
+    public boolean placeMine(String position) {
+        // TODO : Input validation, but it should probably go somewhere else with previous validations
+
+        String[] splitPosition = position.split(" ");
+        String colString = "" + position.charAt(0);
+        String rowString = "" + position.charAt(1);
+        if(position.length() > 2) rowString += position.charAt(2);
+
+        return playerGrid.placeMineTile(colString, rowString);
     }
 }

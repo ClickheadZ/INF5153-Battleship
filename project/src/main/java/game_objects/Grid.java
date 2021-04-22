@@ -1,5 +1,7 @@
 package game_objects;
 
+import game_objects.tiles.Tile;
+
 import java.util.HashMap;
 
 /**
@@ -7,8 +9,8 @@ import java.util.HashMap;
  */
 public class Grid {
     private Tile[][] grid;
-    private HashMap<String,Integer> rows = new HashMap();
-    private HashMap<String,Integer> columns = new HashMap();
+    private HashMap<String,Integer> rows = new HashMap<String, Integer>();
+    private HashMap<String,Integer> columns = new HashMap<String, Integer>();
 
     public Grid() {
         this.grid = new Tile[10][10];

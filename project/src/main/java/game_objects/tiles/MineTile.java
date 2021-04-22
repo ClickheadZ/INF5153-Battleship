@@ -1,4 +1,4 @@
-package game_objects;
+package game_objects.tiles;
 
 /**
  * Defines behaviour of a mine tile.

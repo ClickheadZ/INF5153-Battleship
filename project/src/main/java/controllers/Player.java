@@ -10,7 +10,6 @@ public class Player {
     private Grid playerGrid;
     private Boat[] boats;
 
-
     public Player() {
         this.playerGrid = new Grid();
         this.boats = new Boat[5];
@@ -26,12 +25,19 @@ public class Player {
      * Attempts to place a boat in the player's grid at specified position.
      * If a boat is vertical, the rest of the body will be below specified position.
      * If it is horizontal, the body will be towards the right.
-     * @return          true if boat successfully placed, false otherwise
-     * @param   boatId  the index of the boat in boats[]
-     * @param   vertical true if boat is placed vertically, false if horizontally
+     * @return              true if boat successfully placed, false otherwise
+     * @param   boatId      the index of the boat in boats[]
+     * @param   placement   format : "v a5"
      */
-    public boolean placeBoat(int boatId, String position, boolean vertical) {
+    public boolean placeBoat(int boatId, String placement) {
+        String[] splitPlacement = placement.split(" ");
+        boolean vertical = false;
+        if(splitPlacement[0].charAt(0) == 'v') {
+            vertical = true;
+        }
+        String position = splitPlacement[1];
         int amount = boats[boatId].getSize();
+        // TODO : finish this method by calling placeTiles or smth on Grid
         return false;
     }
 }

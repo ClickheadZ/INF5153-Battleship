@@ -1,4 +1,6 @@
-package game_objects;
+package game_objects.tiles;
+
+import game_objects.Boat;
 
 /**
  * Defines behaviour of a boat tile.

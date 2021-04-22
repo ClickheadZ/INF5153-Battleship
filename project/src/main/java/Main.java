@@ -1,4 +1,5 @@
 import controllers.*;
+import tools.IoHandler;
 
 import java.io.IOException;
 
@@ -53,5 +54,11 @@ public class Main {
         // Start the Placement Phase of the game
         Player humanPlayer = new Player();
         Player aiPlayer = new Player();
+
+        System.out.print("Do you want your boats to be placed randomly? (y / n) : ");
+        boolean randomlyPlace = IoHandler.getInput().equals("y");
+
+        PlacementManager.placeBoats(humanPlayer, randomlyPlace);
+        PlacementManager.placeBoats(aiPlayer, true);
     }
 }

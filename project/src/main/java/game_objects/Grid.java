@@ -13,6 +13,7 @@ public class Grid {
     private Tile[][] grid;
     private HashMap<String,Integer> rows = new HashMap<String, Integer>();
     private HashMap<String,Integer> columns = new HashMap<String, Integer>();
+    // TODO : Give HashMaps to player? Might save a lot of trouble and make more sense.
 
     public Grid() {
         this.grid = new Tile[10][10];
@@ -31,16 +32,26 @@ public class Grid {
 
     public boolean placeBoatTiles(int size, int boatId, boolean vertical, String col, String row) {
         for(int i=0; i<size; ++i) {
-            Tile boatTile = new BoatTile(boatId);
-
             int tileCol = columns.get(col);
             int tileRow = rows.get(row);
+
+            // Checking for out of bounds
+            if(vertical && tileCol + size > 9) {
+                System.out.println("- ERROR : Boat out of bounds -");
+                return false;
+            }
+            if(!vertical && tileRow + size > 9) {
+                System.out.println("- ERROR : Boat out of bounds -");
+                return false;
+            }
 
             if(vertical) {
                 tileCol += i;
             } else {
                 tileRow += i;
             }
+
+            Tile boatTile = new BoatTile(boatId);
 
             if(!placeTile(boatTile, tileCol, tileRow)) return false;
         }
@@ -61,15 +72,55 @@ public class Grid {
      * @return  false if there is already a tile there
      */
     public boolean placeTile(Tile tile, int col, int row) {
-        if(grid[col][row] != null) {
-            return false;
-        } else {
+        boolean canPlace = false;
+
+        if(grid[col][row] == null) {
             grid[col][row] = tile;
-            return true;
+            canPlace = true;
+        } else {
+            System.out.println("- ERROR : Tile already occupied -");
         }
+
+        if(canPlace && tile.symbol == 'B') {
+            canPlace = !neighboursBoat(col, row);
+        }
+
+        return canPlace;
+    }
+
+    public boolean neighboursBoat(int col, int row) {
+        if(col > 0 && grid[col-1][row] != null && grid[col-1][row].symbol == 'B') return true;
+        if(col < 9 && grid[col+1][row] != null && grid[col+1][row].symbol == 'B') return true;
+        if(row > 0 && grid[col][row-1] != null && grid[col][row-1].symbol == 'B') return true;
+        if(row < 9 && grid[col][row+1] != null && grid[col][row+1].symbol == 'B') return true;
+
+        // TODO : fix these checks because for some reason they block the program
+        System.out.println("- ERROR : Boat cannot touch another boat -");
+        return false;
     }
 
     public void printGrid() {
+        System.out.print("\n");
+        System.out.println("     a b c d e f g h i j");
+        System.out.print("   _______________________");
 
+        for(int i=0; i<10; ++i) {
+            String linePrint = "\n " + (i+1) + " | ";
+            if(i == 9) linePrint = "\n" + (i+1) + " | ";
+
+            for(int j=0; j<10; ++j) {
+                char gridSymbol;
+                if(grid[i][j] == null) {
+                    gridSymbol = '.';
+                } else {
+                    gridSymbol = grid[i][j].symbol;
+                }
+                linePrint += gridSymbol + " ";
+            }
+            linePrint += "|";
+            System.out.print(linePrint);
+        }
+
+        System.out.println("\n   -----------------------\n");
     }
 }

@@ -61,12 +61,14 @@ public class Main {
         if(!randomlyPlace) {
             System.out.println("Instructions : To place a boat, enter v or h depending on if you want the boat to " +
                     "be placed vertically or horizontally, followed by a space and then the letter representing the " +
-                    "column, immediately followed by the number representing the row.\n " +
+                    "column,\nimmediately followed by the number representing the row.\n " +
                     "i.e : 'v a1' or 'h j10'.\n\n" +
                     "If the boat is placed vertically, it will continue below the specified position on the grid. " +
                     "If it is placed horizontally, it will continue towards the right of the chosen position.");
         }
         PlacementManager.placeBoats(humanPlayer, randomlyPlace);
         PlacementManager.placeBoats(aiPlayer, true);
+
+        humanPlayer.printPlayerGrid();
     }
 }

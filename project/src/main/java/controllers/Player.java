@@ -82,4 +82,8 @@ public class Player {
 
         return playerGrid.placeMineTile(colString, rowString);
     }
+
+    public void printPlayerGrid() {
+        playerGrid.printGrid();
+    }
 }

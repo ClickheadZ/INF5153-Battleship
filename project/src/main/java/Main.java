@@ -58,6 +58,14 @@ public class Main {
         System.out.print("Do you want your boats to be placed randomly? (y / n) : ");
         boolean randomlyPlace = IoHandler.getInput().equals("y");
 
+        if(!randomlyPlace) {
+            System.out.println("Instructions : To place a boat, enter v or h depending on if you want the boat to " +
+                    "be placed vertically or horizontally, followed by a space and then the letter representing the " +
+                    "column, immediately followed by the number representing the row.\n " +
+                    "i.e : 'v a1' or 'h j10'.\n\n" +
+                    "If the boat is placed vertically, it will continue below the specified position on the grid. " +
+                    "If it is placed horizontally, it will continue towards the right of the chosen position.");
+        }
         PlacementManager.placeBoats(humanPlayer, randomlyPlace);
         PlacementManager.placeBoats(aiPlayer, true);
     }

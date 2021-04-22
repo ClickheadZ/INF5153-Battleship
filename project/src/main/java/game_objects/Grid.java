@@ -27,7 +27,14 @@ public class Grid {
         }
     }
 
-    public boolean placeTiles(int amount, boolean vertical) {
+    public boolean placeBoatTiles(int size, int boatId, boolean vertical, String col, String row) {
+        // TODO : place tiles for one boat
+
+        return true;
+    }
+
+    public boolean placeTile(Tile tile) {
+        // TODO : place a tile
         return true;
     }
 }

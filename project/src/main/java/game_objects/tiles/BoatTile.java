@@ -1,15 +1,13 @@
 package game_objects.tiles;
 
-import game_objects.Boat;
-
 /**
  * Defines behaviour of a boat tile.
  */
 public class BoatTile extends Tile {
-    private Boat boat;
+    private int boatId;
 
-    public BoatTile(Boat boat) {
-        this.boat = boat;
+    public BoatTile(int boatId) {
+        this.boatId = boatId;
         this.symbol = 'B';
         this.name = "Boat";
     }

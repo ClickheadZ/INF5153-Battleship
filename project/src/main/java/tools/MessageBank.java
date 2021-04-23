@@ -34,6 +34,7 @@ public class MessageBank {
             i.e : 'j4' or 'g6'.""";
 
     public static final String ERROR_FORMAT = "ERROR : Incorrect format.";
+    public static final String ERROR_OPTION = "ERROR : Not a valid option.";
     public static final String ERROR_BOUNDS = "ERROR : Tried to place a tile out of bounds.";
     public static final String ERROR_COLLISION = "ERROR : Tried to place a tile on another one.";
     public static final String ERROR_BOATS_TOUCH = "ERROR : Boats cannot touch each other.";

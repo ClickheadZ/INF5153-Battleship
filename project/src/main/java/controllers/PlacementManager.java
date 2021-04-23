@@ -30,7 +30,7 @@ public class PlacementManager {
         }
     }
 
-    public static void placeMines(Player player, boolean randomly) throws IOException {
+    public static void placeMines(Player player, boolean randomly) {
         for(int i=0; i<5; ++i) {
             String position;
 

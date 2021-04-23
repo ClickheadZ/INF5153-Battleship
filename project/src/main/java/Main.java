@@ -39,51 +39,12 @@ public class Main {
             }
         }
 
-        // Repeatedly ask user for difficulty level until they pick a valid one
-        int difficulty = 0;
+        GameController gameController = new GameController();
 
-        while(true) {
-            System.out.print("Select a difficulty level (e = easy, m = medium, h = hard) : ");
+        gameController.askDifficulty();
 
-            difficulty = InputParser.chooseDifficulty(IoHandler.getInput());
-            if (difficulty != 0) {
-                break;
-            } else {
-                System.out.println("- FORMAT ERROR -");
-            }
-        }
+        gameController.boatPlacementPhase();
 
-        Player humanPlayer = new Player();
-        Player aiPlayer = new Player();
-
-        // Placing boats for both players
-        System.out.print("Do you want your boats to be placed randomly? (y / n) : ");
-        boolean randomlyPlace = IoHandler.getInput().equals("y");
-
-        humanPlayer.printPlayerGrid();
-        if(!randomlyPlace) {
-            System.out.println(MessageBank.INSTRUCTIONS_BOAT_PLACEMENT);
-        }
-
-        PlacementManager.placeBoats(humanPlayer, randomlyPlace);
-        PlacementManager.placeBoats(aiPlayer, true);
-
-        humanPlayer.printPlayerGrid();
-        System.out.println("Your final grid.\nIt will be shown again after every move.");
-
-        // TODO : Replace what main is doing with GameController, with methods like BoatPlacementPhase();
-
-        // Placing mines for both players
-        System.out.print("Do you want your mines to be placed randomly? (y / n) : ");
-        randomlyPlace = IoHandler.getInput().equals("y");
-
-        humanPlayer.printPlayerGrid();
-        if(!randomlyPlace) {
-            System.out.println(MessageBank.INSTRUCTIONS_MINE_PLACEMENT);
-        }
-
-        PlacementManager.placeMines(humanPlayer, randomlyPlace);
-        PlacementManager.placeMines(aiPlayer, true);
-        humanPlayer.printPlayerGrid();
+        gameController.minePlacementPhase();
     }
 }

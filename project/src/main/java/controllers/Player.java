@@ -80,7 +80,9 @@ public class Player {
         String rowString = "" + position.charAt(1);
         if(position.length() > 2) rowString += position.charAt(2);
 
-        return playerGrid.placeMineTile(colString, rowString);
+        // TODO : Fix all this mine shit
+        //return playerGrid.placeMineTile(colString, rowString);
+        return false;
     }
 
     public void printPlayerGrid() {

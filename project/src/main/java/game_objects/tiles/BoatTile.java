@@ -11,4 +11,16 @@ public class BoatTile extends Tile {
         this.symbol = 'B';
         this.name = "Boat";
     }
+
+    public int getBoatId() {
+        return boatId;
+    }
+
+    public boolean hasSameId(BoatTile other) {
+        if(this.boatId == other.getBoatId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

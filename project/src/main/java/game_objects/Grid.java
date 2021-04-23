@@ -31,71 +31,105 @@ public class Grid {
     }
 
     public boolean placeBoatTiles(int size, int boatId, boolean vertical, String col, String row) {
-        for(int i=0; i<size; ++i) {
-            int tileCol = columns.get(col);
-            int tileRow = rows.get(row);
+        int tileCol = columns.get(col);
+        int tileRow = rows.get(row);
 
-            // Checking for out of bounds
-            if(vertical && tileCol + size > 9) {
-                System.out.println("- ERROR : Boat out of bounds -");
-                return false;
-            }
-            if(!vertical && tileRow + size > 9) {
-                System.out.println("- ERROR : Boat out of bounds -");
-                return false;
-            }
+        // Checking for out of bounds
+        if(vertical && tileRow + size > 10) {
+            //System.out.println("- ERROR : Boat out of bounds -");
+            return false;
+        }
+        if(!vertical && tileCol + size > 10) {
+            //System.out.println("- ERROR : Boat out of bounds -");
+            return false;
+        }
+
+        Tile boatTile = new BoatTile(boatId);
+
+        // Check if all tiles can be placed
+        for(int i=0; i<size; ++i) {
+            if(!canPlaceTile(boatTile, tileCol, tileRow)) return false;
 
             if(vertical) {
-                tileCol += i;
+                tileRow += 1;
             } else {
-                tileRow += i;
+                tileCol += 1;
             }
+        }
 
-            Tile boatTile = new BoatTile(boatId);
+        tileCol = columns.get(col);
+        tileRow = rows.get(row);
 
-            if(!placeTile(boatTile, tileCol, tileRow)) return false;
+        // Place all tiles
+        for(int i=0; i<size; ++i) {
+            grid[tileCol][tileRow] = boatTile;
+
+            if(vertical) {
+                tileRow += 1;
+            } else {
+                tileCol += 1;
+            }
         }
 
         return true;
     }
 
-    public boolean placeMineTile(String col, String row) {
+    public void placeMineTile(String col, String row) {
         Tile mine = new MineTile();
         int tileCol = columns.get(col);
         int tileRow = rows.get(row);
 
-        return placeTile(mine, tileCol, tileRow);
+        grid[tileCol][tileRow] = mine;
     }
 
-    /**
-     * Attempts to place a tile at specified position on the grid.
-     * @return  false if there is already a tile there
-     */
-    public boolean placeTile(Tile tile, int col, int row) {
+    public boolean canPlaceTile(Tile tile, int col, int row) {
         boolean canPlace = false;
 
         if(grid[col][row] == null) {
-            grid[col][row] = tile;
             canPlace = true;
         } else {
-            System.out.println("- ERROR : Tile already occupied -");
+            //System.out.println("- ERROR : A tile is already occupied -");
         }
 
         if(canPlace && tile.symbol == 'B') {
-            canPlace = !neighboursBoat(col, row);
+            canPlace = !neighboursBoat( (BoatTile) tile, col, row);
+            if(!canPlace) System.out.print("");//System.out.println("- ERROR : Boat cannot touch another boat -");
         }
 
         return canPlace;
     }
 
-    public boolean neighboursBoat(int col, int row) {
-        if(col > 0 && grid[col-1][row] != null && grid[col-1][row].symbol == 'B') return true;
-        if(col < 9 && grid[col+1][row] != null && grid[col+1][row].symbol == 'B') return true;
-        if(row > 0 && grid[col][row-1] != null && grid[col][row-1].symbol == 'B') return true;
-        if(row < 9 && grid[col][row+1] != null && grid[col][row+1].symbol == 'B') return true;
+    public boolean neighboursBoat(BoatTile tile, int col, int row) {
 
-        // TODO : fix these checks because for some reason they block the program
-        System.out.println("- ERROR : Boat cannot touch another boat -");
+        // TODO : refactor this disgusting mess
+        if(col > 0) {
+            Tile above = grid[col-1][row];
+            if (above != null && above.isBoat()) {
+                if (!tile.hasSameId( (BoatTile) above) ) return true;
+            }
+        }
+
+        if(col < 9) {
+            Tile below = grid[col+1][row];
+            if (below != null && below.isBoat()) {
+                if (!tile.hasSameId( (BoatTile) below) ) return true;
+            }
+        }
+
+        if(row > 0) {
+            Tile left = grid[col][row-1];
+            if (left != null && left.isBoat()) {
+                if (!tile.hasSameId( (BoatTile) left) ) return true;
+            }
+        }
+
+        if(row < 9) {
+            Tile right = grid[col][row+1];
+            if (right != null && right.isBoat()) {
+                if (!tile.hasSameId( (BoatTile) right) ) return true;
+            }
+        }
+
         return false;
     }
 
@@ -110,10 +144,10 @@ public class Grid {
 
             for(int j=0; j<10; ++j) {
                 char gridSymbol;
-                if(grid[i][j] == null) {
+                if(grid[j][i] == null) {
                     gridSymbol = '.';
                 } else {
-                    gridSymbol = grid[i][j].symbol;
+                    gridSymbol = grid[j][i].symbol;
                 }
                 linePrint += gridSymbol + " ";
             }

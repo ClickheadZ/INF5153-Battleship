@@ -67,8 +67,8 @@ public class Main {
                     "If it is placed horizontally, it will continue towards the right of the chosen position.");
         }
         PlacementManager.placeBoats(humanPlayer, randomlyPlace);
-        PlacementManager.placeBoats(aiPlayer, true);
-
         humanPlayer.printPlayerGrid();
+        System.out.println("Your final grid.\nIt will be shown again after every move.");
+        PlacementManager.placeBoats(aiPlayer, true);
     }
 }

@@ -17,6 +17,7 @@ public class PlacementManager {
             if(randomly) {
                 placement = Ai.selectRandomPlacement();
             } else {
+                player.printPlayerGrid();
                 System.out.print("Select where you want to place your " +
                         player.boats[i].getName() + " : ");
                 placement = IoHandler.getInput();
@@ -24,6 +25,7 @@ public class PlacementManager {
 
             if(!player.placeBoat(i, placement)) {
                 --i;
+                if(!randomly) System.out.print(""); // TODO: replace this with a catch all printErrorMessage() function
             }
         }
     }

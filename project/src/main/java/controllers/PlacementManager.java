@@ -37,8 +37,8 @@ public class PlacementManager {
             if(randomly) {
                 position = Ai.selectRandomPosition();
             } else {
-                System.out.print("Select where you want to place your " +
-                        player.boats[i].getName() + " : ");
+                player.printPlayerGrid();
+                System.out.print("Select where you want to place your mine : ");
                 position = IoHandler.getInput();
             }
 

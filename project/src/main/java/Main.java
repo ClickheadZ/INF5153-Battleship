@@ -51,13 +51,14 @@ public class Main {
             }
         }
 
-        // Start the Placement Phase of the game
         Player humanPlayer = new Player();
         Player aiPlayer = new Player();
 
+        // Placing boats for both players
         System.out.print("Do you want your boats to be placed randomly? (y / n) : ");
         boolean randomlyPlace = IoHandler.getInput().equals("y");
 
+        humanPlayer.printPlayerGrid();
         if(!randomlyPlace) {
             System.out.println("Instructions : To place a boat, enter v or h depending on if you want the boat to " +
                     "be placed vertically or horizontally, followed by a space and then the letter representing the " +
@@ -70,5 +71,19 @@ public class Main {
         humanPlayer.printPlayerGrid();
         System.out.println("Your final grid.\nIt will be shown again after every move.");
         PlacementManager.placeBoats(aiPlayer, true);
+
+        // TODO : Replace what main is doing with GameController, with methods like BoatPlacementPhase();
+
+        // Placing mines for both players
+        System.out.print("Do you want your mines to be placed randomly? (y / n) : ");
+        randomlyPlace = IoHandler.getInput().equals("y");
+
+        humanPlayer.printPlayerGrid();
+        if(!randomlyPlace) {
+            System.out.println("Instructions : To place a mine, type the letter representing the column\n" +
+                    "followed by the number representing the row.\n" +
+                    "i.e : 'j4' or 'g6'.");
+        }
+        PlacementManager.placeMines(humanPlayer, randomlyPlace);
     }
 }

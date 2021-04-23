@@ -36,34 +36,39 @@ public class Player {
         // Input validation
         // TODO : Pass on all this input validation to IoHandler to improve clarity?
         // TODO : Make Position and Placement actual objects??
+        if(placement.length() > 5 || placement.length() < 4) {
+            System.out.println("ERROR : Incorrect format.");
+            return false;
+        }
+
         if(splitPlacement[0].charAt(0) == 'v') {
             vertical = true;
         } else if (splitPlacement[0].charAt(0) == 'h') {
             vertical = false;
         } else {
-            System.out.println("- FORMAT ERROR -");
+            System.out.println("ERROR : Incorrect format.");
             return false;
         }
 
         String position = splitPlacement[1];
         if(position.charAt(0) < 'a' || position.charAt(0) > 'j') {
-            System.out.println("- Column letter must be between 'a' and 'j' -");
+            System.out.println("ERROR : Column letter must be between 'a' and 'j'.");
             return false;
         }
 
         String colString = "" + position.charAt(0);
-
         String rowString = "" + position.charAt(1);
+
         if(position.length() > 2) rowString += position.charAt(2);
-        int row;
+
         try {
-            row = Integer.parseInt(rowString);
+            int row = Integer.parseInt(rowString);
             if(row < 1 || row > 10) {
-                System.out.println("- Row number must be between 1 and 10 -");
+                System.out.println("- Row number must be between 1 and 10 -"); // TODO catch all error msg
                 return false;
             }
         } catch (NumberFormatException e) {
-            System.out.println("- FORMAT ERROR -");
+            System.out.println("ERROR : Incorrect format."); // TODO : catch all error message
             return false;
         }
 
@@ -75,14 +80,32 @@ public class Player {
     public boolean placeMine(String position) {
         // TODO : Input validation, but it should probably go somewhere else with previous validations
 
-        String[] splitPosition = position.split(" ");
+        if(position.length() > 3 || position.length() < 2) {
+            System.out.println("ERROR : Incorrect format.");
+            return false;
+        }
+
+        if(position.charAt(0) < 'a' || position.charAt(0) > 'j') {
+            System.out.println("ERROR : Column letter must be between 'a' and 'j'.");
+            return false;
+        }
+
         String colString = "" + position.charAt(0);
         String rowString = "" + position.charAt(1);
         if(position.length() > 2) rowString += position.charAt(2);
 
-        // TODO : Fix all this mine shit
-        //return playerGrid.placeMineTile(colString, rowString);
-        return false;
+        try {
+            int row = Integer.parseInt(rowString);
+            if(row < 1 || row > 10) {
+                System.out.println("ERROR : Row number must be between 1 and 10."); // TODO catch all error msg
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("ERROR : Incorrect format."); // TODO : catch all error message
+            return false;
+        }
+
+        return playerGrid.placeMineTile(colString, rowString);
     }
 
     public void printPlayerGrid() {

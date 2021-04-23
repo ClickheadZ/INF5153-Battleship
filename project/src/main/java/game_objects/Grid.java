@@ -36,11 +36,11 @@ public class Grid {
 
         // Checking for out of bounds
         if(vertical && tileRow + size > 10) {
-            //System.out.println("- ERROR : Boat out of bounds -");
+            //System.out.println("ERROR : Boat out of bounds.");
             return false;
         }
         if(!vertical && tileCol + size > 10) {
-            //System.out.println("- ERROR : Boat out of bounds -");
+            //System.out.println("ERROR : Boat out of bounds.");
             return false;
         }
 
@@ -74,12 +74,17 @@ public class Grid {
         return true;
     }
 
-    public void placeMineTile(String col, String row) {
+    public boolean placeMineTile(String col, String row) {
         Tile mine = new MineTile();
         int tileCol = columns.get(col);
         int tileRow = rows.get(row);
 
-        grid[tileCol][tileRow] = mine;
+        if(!canPlaceTile(mine, tileCol, tileRow)) {
+            return false;
+        } else {
+            grid[tileCol][tileRow] = mine;
+            return true;
+        }
     }
 
     public boolean canPlaceTile(Tile tile, int col, int row) {
@@ -88,12 +93,12 @@ public class Grid {
         if(grid[col][row] == null) {
             canPlace = true;
         } else {
-            //System.out.println("- ERROR : A tile is already occupied -");
+            System.out.println("ERROR : A tile is already occupied.");
         }
 
         if(canPlace && tile.symbol == 'B') {
             canPlace = !neighboursBoat( (BoatTile) tile, col, row);
-            if(!canPlace) System.out.print("");//System.out.println("- ERROR : Boat cannot touch another boat -");
+            if(!canPlace) System.out.print("");//System.out.println("ERROR : Boat cannot touch another boat.");
         }
 
         return canPlace;

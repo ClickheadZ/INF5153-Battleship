@@ -1,14 +1,16 @@
 package tools;
 
+import game_objects.BoatPosition;
+import game_objects.Position;
+
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Parses and validates all input from the user.
  */
 public class InputParser {
 
-    public static BoatPosition parseBoatPosition(String boatInput) throws IOException {
+    public static BoatPosition parseBoatPosition(String boatInput) {
         String[] splitBoatPosition = boatInput.split(" ");
         BoatPosition boatPosition;
 
@@ -92,5 +94,25 @@ public class InputParser {
         int row = Integer.parseInt(rowString);
         row -= 1;
         return row;
+    }
+
+    public static int chooseDifficulty(String input) {
+        int difficultyScore;
+
+        switch (input) {
+            case "e":
+                difficultyScore = 1;
+                break;
+            case "m":
+                difficultyScore = 2;
+                break;
+            case "h":
+                difficultyScore = 3;
+                break;
+            default:
+                difficultyScore = 0;
+        }
+
+        return difficultyScore;
     }
 }

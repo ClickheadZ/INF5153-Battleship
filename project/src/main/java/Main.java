@@ -1,5 +1,7 @@
 import controllers.*;
+import tools.InputParser;
 import tools.IoHandler;
+import tools.MessageBank;
 
 import java.io.IOException;
 
@@ -24,7 +26,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        IoHandler.printOpening();
+        System.out.println(MessageBank.OPENING_SCREEN);
         // Repeatedly ask user for file type until they pick a valid one
         while(true) {
             System.out.print("Please select the type of file where logs will be stored " +
@@ -43,7 +45,7 @@ public class Main {
         while(true) {
             System.out.print("Select a difficulty level (e = easy, m = medium, h = hard) : ");
 
-            difficulty = IoHandler.chooseDifficulty();
+            difficulty = InputParser.chooseDifficulty(IoHandler.getInput());
             if (difficulty != 0) {
                 break;
             } else {
@@ -60,17 +62,14 @@ public class Main {
 
         humanPlayer.printPlayerGrid();
         if(!randomlyPlace) {
-            System.out.println("Instructions : To place a boat, enter v or h depending on if you want the boat to " +
-                    "be placed vertically or horizontally, followed by a space and then the letter representing the " +
-                    "column,\nimmediately followed by the number representing the row.\n " +
-                    "i.e : 'v a1' or 'h j10'.\n\n" +
-                    "If the boat is placed vertically, it will continue below the specified position on the grid. " +
-                    "If it is placed horizontally, it will continue towards the right of the chosen position.");
+            System.out.println(MessageBank.INSTRUCTIONS_BOAT_PLACEMENT);
         }
+
         PlacementManager.placeBoats(humanPlayer, randomlyPlace);
+        PlacementManager.placeBoats(aiPlayer, true);
+
         humanPlayer.printPlayerGrid();
         System.out.println("Your final grid.\nIt will be shown again after every move.");
-        PlacementManager.placeBoats(aiPlayer, true);
 
         // TODO : Replace what main is doing with GameController, with methods like BoatPlacementPhase();
 
@@ -80,10 +79,9 @@ public class Main {
 
         humanPlayer.printPlayerGrid();
         if(!randomlyPlace) {
-            System.out.println("Instructions : To place a mine, type the letter representing the column\n" +
-                    "followed by the number representing the row.\n" +
-                    "i.e : 'j4' or 'g6'.");
+            System.out.println(MessageBank.INSTRUCTIONS_MINE_PLACEMENT);
         }
+
         PlacementManager.placeMines(humanPlayer, randomlyPlace);
         PlacementManager.placeMines(aiPlayer, true);
         humanPlayer.printPlayerGrid();

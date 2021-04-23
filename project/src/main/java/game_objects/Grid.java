@@ -3,10 +3,6 @@ package game_objects;
 import game_objects.tiles.BoatTile;
 import game_objects.tiles.MineTile;
 import game_objects.tiles.Tile;
-import tools.BoatPosition;
-import tools.Position;
-
-import java.util.HashMap;
 
 /**
  * Defines the properties and behaviour of a player grid.

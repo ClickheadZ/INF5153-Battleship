@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class PlacementManager {
 
-    public static void placeBoats(Player player, boolean randomly) throws IOException {
+    public static void placeBoats(Player player, boolean randomly) {
         for(int i=0; i<5; ++i) {
             String boatInput;
 

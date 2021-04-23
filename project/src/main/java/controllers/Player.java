@@ -2,8 +2,8 @@ package controllers;
 
 import game_objects.Boat;
 import game_objects.Grid;
-import tools.BoatPosition;
-import tools.Position;
+import game_objects.BoatPosition;
+import game_objects.Position;
 import tools.InputParser;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class Player {
      * @param   boatId      the index of the boat in boats[]
      * @param   input   format : "v a5"
      */
-    public boolean placeBoat(int boatId, String input) throws IOException {
+    public boolean placeBoat(int boatId, String input) {
         if(!InputParser.validBoatInput(input)) return false;
 
         BoatPosition boatPosition = InputParser.parseBoatPosition(input);

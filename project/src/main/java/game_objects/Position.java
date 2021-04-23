@@ -1,4 +1,4 @@
-package tools;
+package game_objects;
 
 public class Position {
     private int col;

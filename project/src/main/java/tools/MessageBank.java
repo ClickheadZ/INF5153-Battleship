@@ -24,16 +24,28 @@ public class MessageBank {
     public static final String INSTRUCTIONS_BOAT_PLACEMENT = """
             Instructions : To place a boat, enter v or h depending on if you want the boat to be placed vertically or horizontally, followed by a space and then the letter representing the column,
             immediately followed by the number representing the row.
-             i.e : 'v a1' or 'h j10'.
+            
+            i.e : 'v a1' or 'h j10'.
 
             If the boat is placed vertically, it will continue below the specified position on the grid. If it is placed horizontally, it will continue towards the right of the chosen position.""";
 
     public static final String INSTRUCTIONS_MINE_PLACEMENT  = """
             Instructions : To place a mine, type the letter representing the column
             followed by the number representing the row.
+           
             i.e : 'j4' or 'g6'.""";
 
-    public static final String INSTRUCTIONS_ATTACK_PHASE = "!!! Add this message !!!";
+    public static final String INSTRUCTIONS_BATTLE_PHASE = """
+            Battle phase has now begun. To attack a tile in the enemy grid, type
+            the letter corresponding to the column followed by the number for the row.
+            
+            i.e : 'a1' or 'j10'.""";
+
+    public static final String ENDING_MSG = """
+            Thank you for playing BATTLESHIP.
+            
+            All game logs have been stored in the following file :\s
+            """;
 
     public static final String ERROR_FORMAT = "ERROR : Incorrect format.";
     public static final String ERROR_COLUMN = "ERROR : Column letter must be between 'a' and 'j'.";
@@ -47,10 +59,10 @@ public class MessageBank {
         errorMsg = error;
     }
 
-    public static void printIfError() {
-        if(errorMsg != "") {
-            System.out.println(errorMsg);
-            errorMsg = "";
-        }
+    public static boolean hasError() { return !errorMsg.equals(""); }
+
+    public static void printErrorMsg() {
+        System.out.println(errorMsg);
+        errorMsg = "";
     }
 }

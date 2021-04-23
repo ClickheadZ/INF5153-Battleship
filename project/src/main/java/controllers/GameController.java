@@ -68,4 +68,12 @@ public class GameController {
         humanPlayer.printPlayerGrid();
         System.out.println("Your final grid.\nIt will be shown again after every move.");
     }
+
+    public void battlePhase() {
+        System.out.println(MessageBank.INSTRUCTIONS_BATTLE_PHASE);
+
+        // while(true), loop exits right after a player turn
+        // player1 performs an attack, then check winconditions
+        // player2 performs an attack, then check winconditions
+    }
 }

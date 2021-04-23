@@ -42,5 +42,10 @@ public class Main {
         gameController.boatPlacementPhase();
 
         gameController.minePlacementPhase();
+
+        gameController.battlePhase();
+
+        // TODO : add restart game functionality after battle phase
+        System.out.println(MessageBank.ENDING_MSG + "*INSERT FILENAME HERE*");
     }
 }

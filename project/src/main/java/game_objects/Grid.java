@@ -114,12 +114,12 @@ public class Grid {
 
     public void printGrid() {
         System.out.print("\n");
-        System.out.println("     a b c d e f g h i j");
-        System.out.print("   _______________________");
+        System.out.println("      a  b  c  d  e  f  g  h  i  j ");
+        System.out.print("    __|__|__|__|__|__|__|__|__|__|__");
 
         for(int i=0; i<10; ++i) {
-            String linePrint = "\n " + (i+1) + " | ";
-            if(i == 9) linePrint = "\n" + (i+1) + " | ";
+            String linePrint = "\n " + (i+1) + " [  ";
+            if(i == 9) linePrint = "\n" + (i+1) + " [  ";
 
             for(int j=0; j<10; ++j) {
                 char gridSymbol;
@@ -128,12 +128,12 @@ public class Grid {
                 } else {
                     gridSymbol = grid[j][i].symbol;
                 }
-                linePrint += gridSymbol + " ";
+                linePrint += gridSymbol + "  ";
             }
             linePrint += "|";
             System.out.print(linePrint);
         }
 
-        System.out.println("\n   -----------------------\n");
+        System.out.println("\n    --------------------------------\n");
     }
 }

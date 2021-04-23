@@ -6,8 +6,6 @@ import game_objects.BoatPosition;
 import game_objects.Position;
 import tools.InputParser;
 
-import java.io.IOException;
-
 /**
  * Defines actions that a player can take on their turn, in both stages of the game.
  */

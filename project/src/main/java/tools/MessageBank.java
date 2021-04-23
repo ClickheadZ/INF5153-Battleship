@@ -2,10 +2,10 @@ package tools;
 
 /**
  * A container class for the various messages the program prints to the screen.
- * Also contains a string that is updated to contain various error messages.
+ * Only relatively long strings are kept here, and all error messages.
  */
 public class MessageBank {
-    public static String errorMessage = "";
+    private static String errorMsg = "";
 
     public static final String OPENING_SCREEN = """
             \s
@@ -33,9 +33,24 @@ public class MessageBank {
             followed by the number representing the row.
             i.e : 'j4' or 'g6'.""";
 
+    public static final String INSTRUCTIONS_ATTACK_PHASE = "!!! Add this message !!!";
+
     public static final String ERROR_FORMAT = "ERROR : Incorrect format.";
+    public static final String ERROR_COLUMN = "ERROR : Column letter must be between 'a' and 'j'.";
+    public static final String ERROR_ROW = "ERROR : Row number must be between 1 and 10.";
     public static final String ERROR_OPTION = "ERROR : Not a valid option.";
     public static final String ERROR_BOUNDS = "ERROR : Tried to place a tile out of bounds.";
     public static final String ERROR_COLLISION = "ERROR : Tried to place a tile on another one.";
     public static final String ERROR_BOATS_TOUCH = "ERROR : Boats cannot touch each other.";
+
+    public static void setErrorMsg(String error) {
+        errorMsg = error;
+    }
+
+    public static void printIfError() {
+        if(errorMsg != "") {
+            System.out.println(errorMsg);
+            errorMsg = "";
+        }
+    }
 }

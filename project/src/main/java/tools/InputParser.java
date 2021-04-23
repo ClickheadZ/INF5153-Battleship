@@ -3,8 +3,6 @@ package tools;
 import game_objects.BoatPosition;
 import game_objects.Position;
 
-import java.io.IOException;
-
 /**
  * Parses and validates all input from the user.
  */
@@ -42,14 +40,15 @@ public class InputParser {
 
     public static boolean validBoatInput(String boatInput) {
         if(boatInput.length() > 5 || boatInput.length() < 4) {
-            // TODO : inform catch all error msg here
+            MessageBank.setErrorMsg(MessageBank.ERROR_BOUNDS);
             return false;
         }
 
         String[] splitBoatPosition = boatInput.split(" ");
 
-        char firstChar = splitBoatPosition[0].charAt(0);
+        char firstChar = boatInput.charAt(0);
         if(firstChar != 'v' && firstChar != 'h') {
+            MessageBank.setErrorMsg(MessageBank.ERROR_FORMAT);
             return false;
         }
 
@@ -60,10 +59,13 @@ public class InputParser {
     }
 
     public static boolean validPosition(String position) {
-        if(position.length() > 3) return false;
+        if(position.length() > 3) {
+            MessageBank.setErrorMsg(MessageBank.ERROR_FORMAT);
+            return false;
+        }
 
         if(position.charAt(0) < 'a' || position.charAt(0) > 'j') {
-            System.out.println("ERROR : Column letter must be between 'a' and 'j'.");
+            MessageBank.setErrorMsg(MessageBank.ERROR_COLUMN);
             return false;
         }
 
@@ -73,11 +75,11 @@ public class InputParser {
         try {
             int row = Integer.parseInt(rowString);
             if(row < 1 || row > 10) {
-                // TODO : catch all error msg
+                MessageBank.setErrorMsg(MessageBank.ERROR_ROW);
                 return false;
             }
         } catch (NumberFormatException e) {
-            // TODO : catch all error message
+            MessageBank.setErrorMsg(MessageBank.ERROR_FORMAT);
             return false;
         }
 

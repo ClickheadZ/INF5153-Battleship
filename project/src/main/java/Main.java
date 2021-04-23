@@ -1,9 +1,6 @@
 import controllers.*;
-import tools.InputParser;
 import tools.IoHandler;
 import tools.MessageBank;
-
-import java.io.IOException;
 
 /**
  * ||============================================================||
@@ -22,9 +19,8 @@ import java.io.IOException;
  * @author Alex Moreno
  * @codeEtudiant MORA28069309
  */
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         System.out.println(MessageBank.OPENING_SCREEN);
         // Repeatedly ask user for file type until they pick a valid one

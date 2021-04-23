@@ -3,6 +3,7 @@ package game_objects;
 import game_objects.tiles.BoatTile;
 import game_objects.tiles.MineTile;
 import game_objects.tiles.Tile;
+import tools.MessageBank;
 
 /**
  * Defines the properties and behaviour of a player grid.
@@ -22,11 +23,11 @@ public class Grid {
 
         // Checking for out of bounds
         if(vertical && row + size > 10) {
-            //System.out.println("ERROR : Boat out of bounds.");
+            MessageBank.setErrorMsg(MessageBank.ERROR_BOUNDS);
             return false;
         }
         if(!vertical && col + size > 10) {
-            //System.out.println("ERROR : Boat out of bounds.");
+            MessageBank.setErrorMsg(MessageBank.ERROR_BOUNDS);
             return false;
         }
 
@@ -72,12 +73,12 @@ public class Grid {
         if(grid[col][row] == null) {
             canPlace = true;
         } else {
-            //System.out.println("ERROR : A tile is already occupied.");
+            MessageBank.setErrorMsg(MessageBank.ERROR_COLLISION);
         }
 
         if(canPlace && tile.isBoat()) {
             canPlace = !neighboursBoat( (BoatTile) tile, col, row);
-            if(!canPlace) System.out.print("");//System.out.println("ERROR : Boat cannot touch another boat.");
+            if(!canPlace) MessageBank.setErrorMsg(MessageBank.ERROR_BOATS_TOUCH);
         }
 
         return canPlace;

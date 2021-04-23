@@ -2,8 +2,7 @@ package controllers;
 
 import controllers.ai.Ai;
 import tools.IoHandler;
-
-import java.io.IOException;
+import tools.MessageBank;
 
 /**
  * Handles the logic of the game phase when players are placing their boats and mines.
@@ -25,7 +24,7 @@ public class PlacementManager {
 
             if(!player.placeBoat(i, boatInput)) {
                 --i;
-                if(!randomly) System.out.print(""); // TODO: replace this with a catch all printErrorMessage() function
+                if(!randomly) MessageBank.printIfError();
             }
         }
     }
@@ -44,6 +43,7 @@ public class PlacementManager {
 
             if(!player.placeMine(position)) {
                 --i;
+                if(!randomly) MessageBank.printIfError();
             }
         }
     }

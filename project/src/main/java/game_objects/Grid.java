@@ -3,6 +3,8 @@ package game_objects;
 import game_objects.tiles.BoatTile;
 import game_objects.tiles.MineTile;
 import game_objects.tiles.Tile;
+import tools.BoatPosition;
+import tools.Position;
 
 import java.util.HashMap;
 
@@ -10,36 +12,24 @@ import java.util.HashMap;
  * Defines the properties and behaviour of a player grid.
  */
 public class Grid {
+
     private Tile[][] grid;
-    private HashMap<String,Integer> rows = new HashMap<String, Integer>();
-    private HashMap<String,Integer> columns = new HashMap<String, Integer>();
-    // TODO : Give HashMaps to player? Might save a lot of trouble and make more sense.
 
     public Grid() {
         this.grid = new Tile[10][10];
-
-        // Setting hashmaps to facilitate conversion from user input to grid position
-        for(int i=0; i<10; ++i) {
-            String key = i+1 + "";
-            rows.put(key, i);
-        }
-        // Convert chars a-j to decimals 0-9
-        for(int i=0; i<10; ++i) {
-            String key = (char) (97 + i) + "";
-            columns.put(key, i);
-        }
     }
 
-    public boolean placeBoatTiles(int size, int boatId, boolean vertical, String col, String row) {
-        int tileCol = columns.get(col);
-        int tileRow = rows.get(row);
+    public boolean placeBoatTiles(int size, int boatId, BoatPosition boatPosition) {
+        int col = boatPosition.position.getCol();
+        int row = boatPosition.position.getRow();
+        boolean vertical = boatPosition.isVertical();
 
         // Checking for out of bounds
-        if(vertical && tileRow + size > 10) {
+        if(vertical && row + size > 10) {
             //System.out.println("ERROR : Boat out of bounds.");
             return false;
         }
-        if(!vertical && tileCol + size > 10) {
+        if(!vertical && col + size > 10) {
             //System.out.println("ERROR : Boat out of bounds.");
             return false;
         }
@@ -48,42 +38,35 @@ public class Grid {
 
         // Check if all tiles can be placed
         for(int i=0; i<size; ++i) {
-            if(!canPlaceTile(boatTile, tileCol, tileRow)) return false;
-
             if(vertical) {
-                tileRow += 1;
+                if(!canPlaceTile(boatTile, col, row + i)) return false;
             } else {
-                tileCol += 1;
+                if(!canPlaceTile(boatTile, col + i, row)) return false;
             }
         }
 
-        tileCol = columns.get(col);
-        tileRow = rows.get(row);
-
         // Place all tiles
         for(int i=0; i<size; ++i) {
-            grid[tileCol][tileRow] = boatTile;
-
-            if(vertical) {
-                tileRow += 1;
+            if (vertical) {
+                grid[col][row + i] = boatTile;
             } else {
-                tileCol += 1;
+                grid[col + i][row] = boatTile;
             }
         }
 
         return true;
     }
 
-    public boolean placeMineTile(String col, String row) {
+    public boolean placeMineTile(Position position) {
         Tile mine = new MineTile();
-        int tileCol = columns.get(col);
-        int tileRow = rows.get(row);
+        int col = position.getCol();
+        int row = position.getRow();
 
-        if(!canPlaceTile(mine, tileCol, tileRow)) {
-            return false;
-        } else {
-            grid[tileCol][tileRow] = mine;
+        if(canPlaceTile(mine, col, row)) {
+            grid[col][row] = mine;
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -93,10 +76,10 @@ public class Grid {
         if(grid[col][row] == null) {
             canPlace = true;
         } else {
-            System.out.println("ERROR : A tile is already occupied.");
+            //System.out.println("ERROR : A tile is already occupied.");
         }
 
-        if(canPlace && tile.symbol == 'B') {
+        if(canPlace && tile.isBoat()) {
             canPlace = !neighboursBoat( (BoatTile) tile, col, row);
             if(!canPlace) System.out.print("");//System.out.println("ERROR : Boat cannot touch another boat.");
         }
@@ -105,29 +88,24 @@ public class Grid {
     }
 
     public boolean neighboursBoat(BoatTile tile, int col, int row) {
-
-        // TODO : refactor this disgusting mess
         if(col > 0) {
             Tile above = grid[col-1][row];
             if (above != null && above.isBoat()) {
                 if (!tile.hasSameId( (BoatTile) above) ) return true;
             }
         }
-
         if(col < 9) {
             Tile below = grid[col+1][row];
             if (below != null && below.isBoat()) {
                 if (!tile.hasSameId( (BoatTile) below) ) return true;
             }
         }
-
         if(row > 0) {
             Tile left = grid[col][row-1];
             if (left != null && left.isBoat()) {
                 if (!tile.hasSameId( (BoatTile) left) ) return true;
             }
         }
-
         if(row < 9) {
             Tile right = grid[col][row+1];
             if (right != null && right.isBoat()) {

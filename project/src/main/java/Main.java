@@ -85,5 +85,7 @@ public class Main {
                     "i.e : 'j4' or 'g6'.");
         }
         PlacementManager.placeMines(humanPlayer, randomlyPlace);
+        PlacementManager.placeMines(aiPlayer, true);
+        humanPlayer.printPlayerGrid();
     }
 }

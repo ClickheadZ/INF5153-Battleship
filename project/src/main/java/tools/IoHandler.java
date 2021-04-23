@@ -51,11 +51,19 @@ public class IoHandler {
      * @return what user entered as a string
      * @throws IOException
      */
-    public static String getInput() throws IOException {
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(System.in));
+    public static String getInput() {
+        String input = "";
 
-        return reader.readLine();
+        try {
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(System.in));
+            input = reader.readLine();
+        }
+        catch(IOException e) {
+            // TODO : set global error message to IoException
+        }
+
+        return input;
     }
 
     public static void printOpening() {

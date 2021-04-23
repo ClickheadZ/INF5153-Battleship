@@ -12,18 +12,18 @@ public class PlacementManager {
 
     public static void placeBoats(Player player, boolean randomly) throws IOException {
         for(int i=0; i<5; ++i) {
-            String placement;
+            String boatInput;
 
             if(randomly) {
-                placement = Ai.selectRandomPlacement();
+                boatInput = Ai.selectRandomPlacement();
             } else {
                 player.printPlayerGrid();
                 System.out.print("Select where you want to place your " +
                         player.boats[i].getName() + " : ");
-                placement = IoHandler.getInput();
+                boatInput = IoHandler.getInput();
             }
 
-            if(!player.placeBoat(i, placement)) {
+            if(!player.placeBoat(i, boatInput)) {
                 --i;
                 if(!randomly) System.out.print(""); // TODO: replace this with a catch all printErrorMessage() function
             }

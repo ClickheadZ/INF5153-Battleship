@@ -54,7 +54,7 @@ public class Grid {
     }
 
     public boolean placeMineTile(Position position) {
-        Tile mine = new MineTile();
+        Tile mine = new Tile('M');
         int col = position.getCol();
         int row = position.getRow();
 
@@ -69,7 +69,7 @@ public class Grid {
     public boolean canPlaceTile(Tile tile, int col, int row) {
         boolean canPlace = false;
 
-        if(grid[col][row].isWater()) {
+        if(!grid[col][row].isMine() && !grid[col][row].isBoat()) {
             canPlace = true;
         } else {
             MessageBank.setErrorMsg(MessageBank.ERROR_COLLISION);
@@ -112,22 +112,29 @@ public class Grid {
         return false;
     }
 
-    public char getTileHit(Position position) {
-        // TODO : refactor? having to do this is kinda weird
-        Tile tileHit = grid[position.getCol()][position.getRow()];
-        return tileHit.symbol;
+    public boolean attackTile(Position position) {
+        Tile xTile;
+        Tile targetTile = grid[position.getCol()][position.getRow()];
+
+        if(targetTile.isBoat() || targetTile.isMine()) {
+            xTile = new Tile('x');
+        } else {
+            xTile = new Tile('o');
+        }
+
+        grid[position.getCol()][position.getRow()] = xTile;
+        return targetTile.isBoat();
     }
 
-    public void attackTile(Position position) {
-        DestroyedTile xTile = new DestroyedTile();
-        grid[position.getCol()][position.getRow()] = xTile;
+    public void setTileHit(boolean hit, Position position) {
+        grid[position.getCol()][position.getRow()].symbol = hit ? 'x' : 'o';
     }
 
     public void initializeGrid() {
         for(int i=0; i<10; ++i) {
             for(int j=0; j<10; ++j) {
-                WaterTile waterTile = new WaterTile();
-                grid[i][j] = waterTile;
+                Tile water = new Tile('.');
+                grid[i][j] = water;
             }
         }
     }

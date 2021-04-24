@@ -4,7 +4,6 @@ import game_objects.Boat;
 import game_objects.Grid;
 import game_objects.BoatPosition;
 import game_objects.Position;
-import game_objects.tiles.WaterTile;
 import tools.InputParser;
 
 /**
@@ -13,13 +12,17 @@ import tools.InputParser;
 public class Player {
     private Grid playerGrid;
     private Grid trackingGrid;
+    private int boatsLeft;
     public Boat[] boats;
+    public boolean skipTurn;
 
     public Player() {
         this.playerGrid = new Grid();
+        this.trackingGrid = new Grid();
+        this.boatsLeft = 5;
         this.boats = new Boat[5];
-
         initializeBoats();
+        skipTurn = false;
     }
 
     /**
@@ -48,15 +51,14 @@ public class Player {
         return playerGrid.placeMineTile(position);
     }
 
-    public char launchAttack(Player opponent, String input) {
-        // TODO : needs to update trackingGrid as well
-        return opponent.receiveAttack(input);
+    public void launchAttack(Player opponent, String input) {
+        Position position = InputParser.parsePosition(input);
+        boolean attackHit = opponent.receiveAttack(position);
+        trackingGrid.setTileHit(attackHit, position);
     }
 
-    public char receiveAttack(String input) {
-        Position position = InputParser.parsePosition(input);
-        playerGrid.attackTile(position);
-        return playerGrid.getTileHit(position);
+    public boolean receiveAttack(Position position) {
+        return playerGrid.attackTile(position);
     }
 
     public void initializeBoats() {

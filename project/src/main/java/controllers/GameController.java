@@ -81,22 +81,36 @@ public class GameController {
         // player2 performs an attack, then check winconditions
         while(true) {
             //humanplayer turn
-            String attackInput;
-            boolean inputIsValid = true;
-            do {
-                if(!inputIsValid) MessageBank.printErrorMsg();
+            if(!humanPlayer.skipTurn) {
+                String attackInput;
+                boolean inputIsValid = true;
+                do {
+                    if(!inputIsValid) MessageBank.printErrorMsg();
 
-                System.out.print("Select which tile you want to attack : ");
-                attackInput = IoHandler.getInput();
-                inputIsValid = InputParser.validPosition(attackInput);
-            } while (!inputIsValid);
+                    System.out.print("Select which tile you want to attack : ");
+                    attackInput = IoHandler.getInput();
+                    inputIsValid = InputParser.validPosition(attackInput);
+                } while (!inputIsValid);
 
-            humanPlayer.launchAttack(aiPlayer, attackInput);
+                humanPlayer.launchAttack(aiPlayer, attackInput);
+                // I need the attack to do the following things :
+                //
+                // [x] Set the enemy tile to the right symbol (grid.attackTile)
+                // [ ] Set tracking grid tile to the right symbol ()
+                // [ ] Update player.boats[id] if one of its tiles was hit ()
+                // [ ] Update player.boatsLeft if the boat has size 0 ()
+                // [ ] If mine was hit, switch a boolean to skip next turn ()
+            }
+
+
             // TODO: check win condition now
             // TODO : think about the simplest way to check for win/loss now
 
             //aiPlayer turn
+            if(!aiPlayer.skipTurn) {
 
+            }
+            // check win condition again
         }
     }
 }

@@ -69,11 +69,34 @@ public class GameController {
         System.out.println("Your final grid.\nIt will be shown again after every move.");
     }
 
-    public void battlePhase() {
+    /**
+     *
+     * @return true if player wins, false if AI wins
+     */
+    public boolean battlePhase() {
         System.out.println(MessageBank.INSTRUCTIONS_BATTLE_PHASE);
 
         // while(true), loop exits right after a player turn
         // player1 performs an attack, then check winconditions
         // player2 performs an attack, then check winconditions
+        while(true) {
+            //humanplayer turn
+            String attackInput;
+            boolean inputIsValid = true;
+            do {
+                if(!inputIsValid) MessageBank.printErrorMsg();
+
+                System.out.print("Select which tile you want to attack : ");
+                attackInput = IoHandler.getInput();
+                inputIsValid = InputParser.validPosition(attackInput);
+            } while (!inputIsValid);
+
+            humanPlayer.launchAttack(aiPlayer, attackInput);
+            // TODO: check win condition now
+            // TODO : think about the simplest way to check for win/loss now
+
+            //aiPlayer turn
+
+        }
     }
 }

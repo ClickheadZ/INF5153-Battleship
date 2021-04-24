@@ -1,8 +1,6 @@
 package game_objects;
 
-import game_objects.tiles.BoatTile;
-import game_objects.tiles.MineTile;
-import game_objects.tiles.Tile;
+import game_objects.tiles.*;
 import tools.MessageBank;
 
 /**
@@ -14,6 +12,7 @@ public class Grid {
 
     public Grid() {
         this.grid = new Tile[10][10];
+        initializeGrid();
     }
 
     public boolean placeBoatTiles(int size, int boatId, BoatPosition boatPosition) {
@@ -70,7 +69,7 @@ public class Grid {
     public boolean canPlaceTile(Tile tile, int col, int row) {
         boolean canPlace = false;
 
-        if(grid[col][row] == null) {
+        if(grid[col][row].isWater()) {
             canPlace = true;
         } else {
             MessageBank.setErrorMsg(MessageBank.ERROR_COLLISION);
@@ -87,30 +86,50 @@ public class Grid {
     public boolean neighboursBoat(BoatTile tile, int col, int row) {
         if(col > 0) {
             Tile above = grid[col-1][row];
-            if (above != null && above.isBoat()) {
+            if (above.isBoat()) {
                 if (!tile.hasSameId( (BoatTile) above) ) return true;
             }
         }
         if(col < 9) {
             Tile below = grid[col+1][row];
-            if (below != null && below.isBoat()) {
+            if (below.isBoat()) {
                 if (!tile.hasSameId( (BoatTile) below) ) return true;
             }
         }
         if(row > 0) {
             Tile left = grid[col][row-1];
-            if (left != null && left.isBoat()) {
+            if (left.isBoat()) {
                 if (!tile.hasSameId( (BoatTile) left) ) return true;
             }
         }
         if(row < 9) {
             Tile right = grid[col][row+1];
-            if (right != null && right.isBoat()) {
+            if (right.isBoat()) {
                 if (!tile.hasSameId( (BoatTile) right) ) return true;
             }
         }
 
         return false;
+    }
+
+    public char getTileHit(Position position) {
+        // TODO : refactor? having to do this is kinda weird
+        Tile tileHit = grid[position.getCol()][position.getRow()];
+        return tileHit.symbol;
+    }
+
+    public void attackTile(Position position) {
+        DestroyedTile xTile = new DestroyedTile();
+        grid[position.getCol()][position.getRow()] = xTile;
+    }
+
+    public void initializeGrid() {
+        for(int i=0; i<10; ++i) {
+            for(int j=0; j<10; ++j) {
+                WaterTile waterTile = new WaterTile();
+                grid[i][j] = waterTile;
+            }
+        }
     }
 
     public void printGrid() {
@@ -124,11 +143,7 @@ public class Grid {
 
             for(int j=0; j<10; ++j) {
                 char gridSymbol;
-                if(grid[j][i] == null) {
-                    gridSymbol = '.';
-                } else {
-                    gridSymbol = grid[j][i].symbol;
-                }
+                gridSymbol = grid[j][i].symbol;
                 linePrint += gridSymbol + "  ";
             }
             linePrint += "|";

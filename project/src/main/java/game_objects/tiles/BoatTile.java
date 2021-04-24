@@ -9,7 +9,6 @@ public class BoatTile extends Tile {
     public BoatTile(int boatId) {
         this.boatId = boatId;
         this.symbol = 'B';
-        this.name = "Boat";
     }
 
     public int getBoatId() {

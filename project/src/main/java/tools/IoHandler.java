@@ -39,8 +39,10 @@ public class IoHandler {
             input = reader.readLine();
         }
         catch(IOException e) {
-            // TODO : set global error message to IoException
+            MessageBank.addMessageLog(MessageBank.ERROR_IO);
         }
+
+        System.out.print("\n");
 
         return input;
     }

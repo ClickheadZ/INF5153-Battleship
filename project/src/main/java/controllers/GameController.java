@@ -22,10 +22,12 @@ public class GameController {
             System.out.print("Select a difficulty level (e = easy, m = medium, h = hard) : ");
 
             difficulty = InputParser.chooseDifficulty(IoHandler.getInput());
+
             if (difficulty != 0) {
                 break;
             } else {
-                System.out.println(MessageBank.ERROR_OPTION);
+                MessageBank.addMessageLog(MessageBank.ERROR_OPTION);
+                MessageBank.printMessageLog();
             }
         }
     }
@@ -67,7 +69,7 @@ public class GameController {
         PlacementManager.placeMines(aiPlayer, true);
 
         humanPlayer.printPlayerGrid();
-        System.out.println("Your final grid.\nIt will be shown again after every move.");
+        System.out.println("Your final grid.\nIt will be shown again after every move.\n");
     }
 
     /**
@@ -91,6 +93,7 @@ public class GameController {
                 } while (!inputIsValid);
 
                 humanPlayer.launchAttack(aiPlayer, attackInput);
+                MessageBank.printMessageLog();
             } else {
                 humanPlayer.skipTurn = false;
             }
@@ -102,10 +105,11 @@ public class GameController {
                 // TODO : AI selection needs to affect this part of the code
 
                 aiPlayer.launchAttack(humanPlayer, Ai.selectRandomPosition());
+                MessageBank.printMessageLog();
             } else {
                 aiPlayer.skipTurn = false;
             }
-            // check win condition again
+
             if(humanPlayer.boatsLeft == 0) return false;
         }
     }

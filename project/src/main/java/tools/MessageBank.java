@@ -27,19 +27,19 @@ public class MessageBank {
             
             i.e : 'v a1' or 'h j10'.
 
-            If the boat is placed vertically, it will continue below the specified position on the grid. If it is placed horizontally, it will continue towards the right of the chosen position.""";
+            If the boat is placed vertically, it will continue below the specified position on the grid. If it is placed horizontally, it will continue towards the right of the chosen position.\n""";
 
     public static final String INSTRUCTIONS_MINE_PLACEMENT  = """
             Instructions : To place a mine, type the letter representing the column
             followed by the number representing the row.
            
-            i.e : 'j4' or 'g6'.""";
+            i.e : 'j4' or 'g6'.\n""";
 
     public static final String INSTRUCTIONS_BATTLE_PHASE = """
             Battle phase has now begun. To attack a tile in the enemy grid, type
             the letter corresponding to the column followed by the number for the row.
             
-            i.e : 'a1' or 'j10'.""";
+            i.e : 'a1' or 'j10'.\n""";
 
     public static final String ENDING_MSG = """
             Thank you for playing BATTLESHIP.
@@ -47,6 +47,7 @@ public class MessageBank {
             All game logs have been stored in the following file :\s
             """;
 
+    public static final String ERROR_IO = "ERROR : An IOException was encountered.";
     public static final String ERROR_FORMAT = "ERROR : Incorrect format.";
     public static final String ERROR_COLUMN = "ERROR : Column letter must be between 'a' and 'j'.";
     public static final String ERROR_ROW = "ERROR : Row number must be between 1 and 10.";
@@ -88,13 +89,21 @@ public class MessageBank {
     }
 
     public static void addMessageLog(String message) {
-        messageLog = messageLog + "\n\n" + message;
+        if(hasMessage()) {
+            messageLog = messageLog + "\n\n" + message;
+        } else {
+            messageLog = message;
+        }
     }
 
     public static boolean hasMessage() { return !messageLog.equals(""); }
 
-    public static void printMessageLog() {
-        System.out.println(messageLog);
+    public static void resetLogs() {
         messageLog = "";
+    }
+
+    public static void printMessageLog() {
+        System.out.println(messageLog + "\n");
+        resetLogs();
     }
 }

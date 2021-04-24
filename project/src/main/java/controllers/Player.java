@@ -18,7 +18,7 @@ public class Player {
     public int boatsLeft;
     public Boat[] boats;
     public boolean skipTurn;
-    private final boolean isUser;
+    public final boolean isUser;
 
     public Player(boolean isUser) {
         this.isUser = isUser;
@@ -64,7 +64,6 @@ public class Player {
      * @return  true if a boat was sunk
      */
     public void launchAttack(Player opponent, String input) {
-        boolean boatSunk;
         Position position = InputParser.parsePosition(input);
         Tile tileHit = opponent.receiveAttack(position);
 
@@ -112,5 +111,9 @@ public class Player {
     public void printPlayerGrid() {
         // May have more behaviour later
         playerGrid.printGrid();
+    }
+
+    public void printTest() {
+
     }
 }

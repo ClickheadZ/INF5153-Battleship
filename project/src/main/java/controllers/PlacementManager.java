@@ -24,12 +24,12 @@ public class PlacementManager {
 
             if(!player.placeBoat(i, boatInput)) {
                 --i;
-                if(!randomly && MessageBank.hasMessage()) {
-                    MessageBank.printMessageLog();
-                } else {
-                    System.out.println("Boat successfully placed.");
-                }
+                if(player.isUser && randomly) MessageBank.resetLogs();
             }
+
+            if(!player.isUser) MessageBank.resetLogs();
+
+            if(MessageBank.hasMessage()) MessageBank.printMessageLog();
         }
     }
 
@@ -47,12 +47,12 @@ public class PlacementManager {
 
             if(!player.placeMine(position)) {
                 --i;
-                if(!randomly && MessageBank.hasMessage()) {
-                    MessageBank.printMessageLog();
-                } else {
-                    System.out.println("Mine successfully placed.");
-                }
+                if(player.isUser && randomly) MessageBank.resetLogs();
             }
+
+            if(!player.isUser) MessageBank.resetLogs();
+
+            if(MessageBank.hasMessage()) MessageBank.printMessageLog();
         }
     }
 }

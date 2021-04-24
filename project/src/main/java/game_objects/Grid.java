@@ -50,6 +50,7 @@ public class Grid {
             }
         }
 
+        MessageBank.addMessageLog("Boat successfully placed.");
         return true;
     }
 
@@ -60,6 +61,7 @@ public class Grid {
 
         if(canPlaceTile(mine, col, row)) {
             grid[col][row] = mine;
+            MessageBank.addMessageLog("Mine successfully placed.");
             return true;
         } else {
             return false;
@@ -152,5 +154,9 @@ public class Grid {
         }
 
         System.out.println("\n    --------------------------------\n");
+    }
+
+    public String getGrid() {
+        return "";
     }
 }

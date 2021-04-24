@@ -23,6 +23,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println(MessageBank.OPENING_SCREEN);
+
         // Repeatedly ask user for file type until they pick a valid one
         while(true) {
             System.out.print("Please select the type of file where logs will be stored " +
@@ -31,7 +32,8 @@ public class Main {
             if(IoHandler.chooseFileType()) {
                 break;
             } else {
-                System.out.println("- FORMAT ERROR -");
+                MessageBank.addMessageLog(MessageBank.ERROR_OPTION);
+                MessageBank.printMessageLog();
             }
         }
 

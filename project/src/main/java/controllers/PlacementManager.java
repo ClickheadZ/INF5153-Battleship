@@ -24,8 +24,8 @@ public class PlacementManager {
 
             if(!player.placeBoat(i, boatInput)) {
                 --i;
-                if(!randomly && MessageBank.hasError()) {
-                    MessageBank.printErrorMsg();
+                if(!randomly && MessageBank.hasMessage()) {
+                    MessageBank.printMessageLog();
                 } else {
                     System.out.println("Boat successfully placed.");
                 }
@@ -47,8 +47,8 @@ public class PlacementManager {
 
             if(!player.placeMine(position)) {
                 --i;
-                if(!randomly && MessageBank.hasError()) {
-                    MessageBank.printErrorMsg();
+                if(!randomly && MessageBank.hasMessage()) {
+                    MessageBank.printMessageLog();
                 } else {
                     System.out.println("Mine successfully placed.");
                 }

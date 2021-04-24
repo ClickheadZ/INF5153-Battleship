@@ -22,11 +22,11 @@ public class Grid {
 
         // Checking for out of bounds
         if(vertical && row + size > 10) {
-            MessageBank.setErrorMsg(MessageBank.ERROR_BOUNDS);
+            MessageBank.addMessageLog(MessageBank.ERROR_BOUNDS);
             return false;
         }
         if(!vertical && col + size > 10) {
-            MessageBank.setErrorMsg(MessageBank.ERROR_BOUNDS);
+            MessageBank.addMessageLog(MessageBank.ERROR_BOUNDS);
             return false;
         }
 
@@ -72,12 +72,12 @@ public class Grid {
         if(!grid[col][row].isMine() && !grid[col][row].isBoat()) {
             canPlace = true;
         } else {
-            MessageBank.setErrorMsg(MessageBank.ERROR_COLLISION);
+            MessageBank.addMessageLog(MessageBank.ERROR_COLLISION);
         }
 
         if(canPlace && tile.isBoat()) {
             canPlace = !neighboursBoat( (BoatTile) tile, col, row);
-            if(!canPlace) MessageBank.setErrorMsg(MessageBank.ERROR_BOATS_TOUCH);
+            if(!canPlace) MessageBank.addMessageLog(MessageBank.ERROR_BOATS_TOUCH);
         }
 
         return canPlace;
@@ -112,18 +112,12 @@ public class Grid {
         return false;
     }
 
-    public boolean attackTile(Position position) {
-        Tile xTile;
+    public Tile attackTile(Position position) {
         Tile targetTile = grid[position.getCol()][position.getRow()];
 
-        if(targetTile.isBoat() || targetTile.isMine()) {
-            xTile = new Tile('x');
-        } else {
-            xTile = new Tile('o');
-        }
+        setTileHit((targetTile.isBoat()), position);
 
-        grid[position.getCol()][position.getRow()] = xTile;
-        return targetTile.isBoat();
+        return targetTile;
     }
 
     public void setTileHit(boolean hit, Position position) {

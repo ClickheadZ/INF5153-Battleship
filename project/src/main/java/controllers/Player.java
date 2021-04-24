@@ -4,7 +4,10 @@ import game_objects.Boat;
 import game_objects.Grid;
 import game_objects.BoatPosition;
 import game_objects.Position;
+import game_objects.tiles.BoatTile;
+import game_objects.tiles.Tile;
 import tools.InputParser;
+import tools.MessageBank;
 
 /**
  * Defines actions that a player can take on their turn, in both stages of the game.
@@ -12,11 +15,14 @@ import tools.InputParser;
 public class Player {
     private Grid playerGrid;
     private Grid trackingGrid;
-    private int boatsLeft;
+    public int boatsLeft;
     public Boat[] boats;
     public boolean skipTurn;
+    private final boolean isUser;
 
-    public Player() {
+    public Player(boolean isUser) {
+        this.isUser = isUser;
+
         this.playerGrid = new Grid();
         this.trackingGrid = new Grid();
         this.boatsLeft = 5;
@@ -51,14 +57,48 @@ public class Player {
         return playerGrid.placeMineTile(position);
     }
 
+    /**
+     *
+     * @param opponent
+     * @param input
+     * @return  true if a boat was sunk
+     */
     public void launchAttack(Player opponent, String input) {
+        boolean boatSunk;
         Position position = InputParser.parsePosition(input);
-        boolean attackHit = opponent.receiveAttack(position);
-        trackingGrid.setTileHit(attackHit, position);
+        Tile tileHit = opponent.receiveAttack(position);
+
+        trackingGrid.setTileHit(tileHit.isBoat(), position);
+
+        if(tileHit.isBoat()) {
+            MessageBank.addMessageLog(MessageBank.buildHitBoatMsg(isUser));
+        } else if(tileHit.isMine()) {
+            skipTurn = true;
+            MessageBank.addMessageLog(MessageBank.buildHitMineMsg(isUser));
+        } else {
+            MessageBank.addMessageLog(MessageBank.buildMissMsg(isUser));
+        }
     }
 
-    public boolean receiveAttack(Position position) {
-        return playerGrid.attackTile(position);
+    /**
+     *
+     * @param position
+     * @return the char of the tile that was hit
+     */
+    public Tile receiveAttack(Position position) {
+        Tile tileHit = playerGrid.attackTile(position);
+
+        if(tileHit.isBoat()) {
+            int boatId = ((BoatTile) tileHit).getBoatId();
+            Boat targetBoat = boats[boatId];
+            targetBoat.attack();
+
+            if(targetBoat.getSize() < 1) {
+                boatsLeft--;
+                MessageBank.addMessageLog(MessageBank.buildSunkMsg(!isUser, targetBoat.getName()));
+            }
+        }
+        return tileHit;
     }
 
     public void initializeBoats() {

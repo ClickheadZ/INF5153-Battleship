@@ -17,6 +17,10 @@ public class Boat {
         return size;
     }
 
+    public void attack() {
+        --size;
+    }
+
     public String getName() {
         return name;
     }

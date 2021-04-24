@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.ai.Ai;
 import tools.InputParser;
 import tools.IoHandler;
 import tools.MessageBank;
@@ -33,8 +34,8 @@ public class GameController {
      * Handles the boat placement phase of the game.
      */
     public void boatPlacementPhase() {
-        humanPlayer = new Player();
-        aiPlayer = new Player();
+        humanPlayer = new Player(true);
+        aiPlayer = new Player(false);
 
         System.out.print("Do you want your boats to be placed randomly? (y / n) : ");
         boolean randomlyPlace = IoHandler.getInput().equals("y");
@@ -76,16 +77,13 @@ public class GameController {
     public boolean battlePhase() {
         System.out.println(MessageBank.INSTRUCTIONS_BATTLE_PHASE);
 
-        // while(true), loop exits right after a player turn
-        // player1 performs an attack, then check winconditions
-        // player2 performs an attack, then check winconditions
         while(true) {
-            //humanplayer turn
+            // Human player turn
             if(!humanPlayer.skipTurn) {
                 String attackInput;
                 boolean inputIsValid = true;
                 do {
-                    if(!inputIsValid) MessageBank.printErrorMsg();
+                    if(!inputIsValid) MessageBank.printMessageLog();
 
                     System.out.print("Select which tile you want to attack : ");
                     attackInput = IoHandler.getInput();
@@ -93,24 +91,22 @@ public class GameController {
                 } while (!inputIsValid);
 
                 humanPlayer.launchAttack(aiPlayer, attackInput);
-                // I need the attack to do the following things :
-                //
-                // [x] Set the enemy tile to the right symbol (grid.attackTile)
-                // [ ] Set tracking grid tile to the right symbol ()
-                // [ ] Update player.boats[id] if one of its tiles was hit ()
-                // [ ] Update player.boatsLeft if the boat has size 0 ()
-                // [ ] If mine was hit, switch a boolean to skip next turn ()
+            } else {
+                humanPlayer.skipTurn = false;
             }
 
+            if(aiPlayer.boatsLeft == 0) return true;
 
-            // TODO: check win condition now
-            // TODO : think about the simplest way to check for win/loss now
-
-            //aiPlayer turn
+            // AiPlayer turn
             if(!aiPlayer.skipTurn) {
+                // TODO : AI selection needs to affect this part of the code
 
+                aiPlayer.launchAttack(humanPlayer, Ai.selectRandomPosition());
+            } else {
+                aiPlayer.skipTurn = false;
             }
             // check win condition again
+            if(humanPlayer.boatsLeft == 0) return false;
         }
     }
 }

@@ -5,7 +5,7 @@ package tools;
  * Only relatively long strings are kept here, and all error messages.
  */
 public class MessageBank {
-    private static String errorMsg = "";
+    private static String messageLog = "";
 
     public static final String OPENING_SCREEN = """
             \s
@@ -55,14 +55,46 @@ public class MessageBank {
     public static final String ERROR_COLLISION = "ERROR : Tried to place a tile on another one.";
     public static final String ERROR_BOATS_TOUCH = "ERROR : Boats cannot touch each other.";
 
-    public static void setErrorMsg(String error) {
-        errorMsg = error;
+    public static String buildMissMsg(boolean isUser) {
+        return isUser ? "You missed." : "The enemy missed.";
     }
 
-    public static boolean hasError() { return !errorMsg.equals(""); }
+    public static String buildHitBoatMsg(boolean isUser) {
+        return isUser ? "You hit a boat!" : "The enemy hit a boat!";
+    }
 
-    public static void printErrorMsg() {
-        System.out.println(errorMsg);
-        errorMsg = "";
+    public static String buildHitMineMsg(boolean isUser) {
+        String message;
+
+        if(isUser) {
+            message = "You hit a mine! You skip the next turn.";
+        } else {
+            message = "The enemy hit a mine! They skip the next turn.";
+        }
+
+        return message;
+    }
+
+    public static String buildSunkMsg(boolean isUser, String boatName) {
+        String message;
+
+        if(isUser) {
+            message = "You sunk the enemy's " + boatName + "!";
+        } else {
+            message = "The enemy sunk your " + boatName + "!";
+        }
+
+        return message;
+    }
+
+    public static void addMessageLog(String message) {
+        messageLog = messageLog + "\n\n" + message;
+    }
+
+    public static boolean hasMessage() { return !messageLog.equals(""); }
+
+    public static void printMessageLog() {
+        System.out.println(messageLog);
+        messageLog = "";
     }
 }

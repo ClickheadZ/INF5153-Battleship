@@ -40,7 +40,7 @@ public class InputParser {
 
     public static boolean validBoatInput(String boatInput) {
         if(boatInput.length() > 5 || boatInput.length() < 4) {
-            MessageBank.setErrorMsg(MessageBank.ERROR_BOUNDS);
+            MessageBank.addMessageLog(MessageBank.ERROR_BOUNDS);
             return false;
         }
 
@@ -48,7 +48,7 @@ public class InputParser {
 
         char firstChar = boatInput.charAt(0);
         if(firstChar != 'v' && firstChar != 'h') {
-            MessageBank.setErrorMsg(MessageBank.ERROR_FORMAT);
+            MessageBank.addMessageLog(MessageBank.ERROR_FORMAT);
             return false;
         }
 
@@ -60,12 +60,12 @@ public class InputParser {
 
     public static boolean validPosition(String position) {
         if(position.length() > 3) {
-            MessageBank.setErrorMsg(MessageBank.ERROR_FORMAT);
+            MessageBank.addMessageLog(MessageBank.ERROR_FORMAT);
             return false;
         }
 
         if(position.charAt(0) < 'a' || position.charAt(0) > 'j') {
-            MessageBank.setErrorMsg(MessageBank.ERROR_COLUMN);
+            MessageBank.addMessageLog(MessageBank.ERROR_COLUMN);
             return false;
         }
 
@@ -75,11 +75,11 @@ public class InputParser {
         try {
             int row = Integer.parseInt(rowString);
             if(row < 1 || row > 10) {
-                MessageBank.setErrorMsg(MessageBank.ERROR_ROW);
+                MessageBank.addMessageLog(MessageBank.ERROR_ROW);
                 return false;
             }
         } catch (NumberFormatException e) {
-            MessageBank.setErrorMsg(MessageBank.ERROR_FORMAT);
+            MessageBank.addMessageLog(MessageBank.ERROR_FORMAT);
             return false;
         }
 

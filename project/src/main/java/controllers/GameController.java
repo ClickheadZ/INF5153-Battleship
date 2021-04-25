@@ -108,7 +108,7 @@ public class GameController {
                 aiPlayer.launchAttack(humanPlayer, Ai.selectRandomPosition());
                 MessageBank.printMessageLog();
             } else {
-                System.out.println("The enemy skips their turn...");
+                System.out.println("The enemy skips their turn...\n");
                 aiPlayer.skipTurn = false;
             }
 

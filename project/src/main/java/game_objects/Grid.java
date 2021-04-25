@@ -119,14 +119,26 @@ public class Grid {
 
     public Tile attackTile(Position position) {
         Tile targetTile = grid[position.getCol()][position.getRow()];
+        Tile previousTile;
+
+        if(targetTile.isBoat()) {
+            previousTile = new BoatTile( ((BoatTile) targetTile).getBoatId() );
+        } else if(targetTile.isMine()) {
+            previousTile = new Tile('M');
+        } else {
+            previousTile = new Tile('.');
+        }
 
         setTileHit((targetTile.isBoat()), position);
 
-        return targetTile;
+        return previousTile;
     }
 
     public void setTileHit(boolean hit, Position position) {
-        grid[position.getCol()][position.getRow()].symbol = hit ? 'x' : 'o';
+        if(grid[position.getCol()][position.getRow()].symbol != 'x') {
+            grid[position.getCol()][position.getRow()].symbol = hit ? 'x' : 'o';
+            // TODO : replace hit empty tiles with '.' again for visibility?
+        }
     }
 
     public void initializeGrid() {
@@ -166,8 +178,8 @@ public class Grid {
         gridLines.add("    __|__|__|__|__|__|__|__|__|__|__ ");
 
         for(int i=0; i<10; ++i) {
-            String linePrint = " " + (i+1) + " [  ";
-            if(i == 9) linePrint = (i+1) + " [  ";
+            String linePrint = " " + (i+1) + " |  ";
+            if(i == 9) linePrint = (i+1) + " |  ";
 
             for(int j=0; j<10; ++j) {
                 char gridSymbol;

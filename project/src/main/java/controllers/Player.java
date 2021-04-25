@@ -70,16 +70,11 @@ public class Player {
         Tile tileHit = opponent.receiveAttack(position);
 
         // TODO : fix all attacks missing bug
-        // NOTE : only the symbol update is working
+        // NOTE : only the symbol update on playerGrid is working
         trackingGrid.setTileHit(tileHit.isBoat(), position);
 
-        if(tileHit.isBoat()) {
-            MessageBank.addMessageLog(MessageBank.buildHitBoatMsg(isUser));
-        } else if(tileHit.isMine()) {
+        if(tileHit.isMine()) {
             skipTurn = true;
-            MessageBank.addMessageLog(MessageBank.buildHitMineMsg(isUser));
-        } else {
-            MessageBank.addMessageLog(MessageBank.buildMissMsg(isUser));
         }
     }
 
@@ -92,6 +87,8 @@ public class Player {
         Tile tileHit = playerGrid.attackTile(position);
 
         if(tileHit.isBoat()) {
+            MessageBank.addMessageLog(MessageBank.buildHitBoatMsg(!isUser));
+
             int boatId = ((BoatTile) tileHit).getBoatId();
             Boat targetBoat = boats[boatId];
             targetBoat.attack();
@@ -100,7 +97,12 @@ public class Player {
                 boatsLeft--;
                 MessageBank.addMessageLog(MessageBank.buildSunkMsg(!isUser, targetBoat.getName()));
             }
+        } else if(tileHit.isMine()) {
+            MessageBank.addMessageLog(MessageBank.buildHitMineMsg(!isUser));
+        } else {
+            MessageBank.addMessageLog(MessageBank.buildMissMsg(!isUser));
         }
+
         return tileHit;
     }
 
@@ -125,12 +127,12 @@ public class Player {
 
         int index = 0;
         for(String gridLine : playerGridList) {
-            line = gridLine + "    " + trackingGridList.get(index);
+            line = gridLine + "     " + trackingGridList.get(index);
             System.out.println(line);
             ++index;
         }
 
-        String footnote = "               Your grid                            Visible enemy grid\n";
+        String footnote = "               Your grid                             Visible enemy grid\n";
         System.out.println(footnote);
     }
 }

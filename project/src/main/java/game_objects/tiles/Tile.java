@@ -13,6 +13,8 @@ public class Tile {
         this.symbol = symbol;
     }
 
-    public boolean isBoat() { return this.symbol == 'B'; }
+    public boolean isBoat() {
+        return this.symbol == 'B';
+    }
     public boolean isMine() { return this.symbol == 'M'; }
 }

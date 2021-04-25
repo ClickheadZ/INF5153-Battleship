@@ -40,7 +40,7 @@ public class InputParser {
 
     public static boolean validBoatInput(String boatInput) {
         if(boatInput.length() > 5 || boatInput.length() < 4) {
-            MessageBank.addMessageLog(MessageBank.ERROR_BOUNDS);
+            MessageBank.addMessageLog(MessageBank.ERROR_FORMAT);
             return false;
         }
 
@@ -59,7 +59,7 @@ public class InputParser {
     }
 
     public static boolean validPosition(String position) {
-        if(position.length() > 3) {
+        if(position.length() > 3 || position.length() < 2) {
             MessageBank.addMessageLog(MessageBank.ERROR_FORMAT);
             return false;
         }

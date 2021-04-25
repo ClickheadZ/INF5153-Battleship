@@ -9,6 +9,8 @@ import game_objects.tiles.Tile;
 import tools.InputParser;
 import tools.MessageBank;
 
+import java.util.ArrayList;
+
 /**
  * Defines actions that a player can take on their turn, in both stages of the game.
  */
@@ -67,6 +69,8 @@ public class Player {
         Position position = InputParser.parsePosition(input);
         Tile tileHit = opponent.receiveAttack(position);
 
+        // TODO : fix all attacks missing bug
+        // NOTE : only the symbol update is working
         trackingGrid.setTileHit(tileHit.isBoat(), position);
 
         if(tileHit.isBoat()) {
@@ -113,7 +117,20 @@ public class Player {
         playerGrid.printGrid();
     }
 
-    public void printTest() {
+    public void printPlayerGrids() {
+        String line = "";
 
+        ArrayList<String> playerGridList = playerGrid.getGridLines();
+        ArrayList<String> trackingGridList = trackingGrid.getGridLines();
+
+        int index = 0;
+        for(String gridLine : playerGridList) {
+            line = gridLine + "    " + trackingGridList.get(index);
+            System.out.println(line);
+            ++index;
+        }
+
+        String footnote = "               Your grid                            Visible enemy grid\n";
+        System.out.println(footnote);
     }
 }

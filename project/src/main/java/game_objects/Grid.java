@@ -2,6 +2,7 @@ package game_objects;
 
 import game_objects.tiles.*;
 import tools.MessageBank;
+import java.util.ArrayList;
 
 /**
  * Defines the properties and behaviour of a player grid.
@@ -43,6 +44,8 @@ public class Grid {
 
         // Place all tiles
         for(int i=0; i<size; ++i) {
+            boatTile = new BoatTile(boatId);
+
             if (vertical) {
                 grid[col][row + i] = boatTile;
             } else {
@@ -156,7 +159,27 @@ public class Grid {
         System.out.println("\n    --------------------------------\n");
     }
 
-    public String getGrid() {
-        return "";
+    public ArrayList<String> getGridLines() {
+        ArrayList<String> gridLines = new ArrayList<String>();
+
+        gridLines.add("      a  b  c  d  e  f  g  h  i  j   ");
+        gridLines.add("    __|__|__|__|__|__|__|__|__|__|__ ");
+
+        for(int i=0; i<10; ++i) {
+            String linePrint = " " + (i+1) + " [  ";
+            if(i == 9) linePrint = (i+1) + " [  ";
+
+            for(int j=0; j<10; ++j) {
+                char gridSymbol;
+                gridSymbol = grid[j][i].symbol;
+                linePrint += gridSymbol + "  ";
+            }
+            linePrint += "|";
+            gridLines.add(linePrint);
+        }
+
+        gridLines.add("    -------------------------------- ");
+
+        return gridLines;
     }
 }

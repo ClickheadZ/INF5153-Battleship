@@ -95,6 +95,7 @@ public class GameController {
                 humanPlayer.launchAttack(aiPlayer, attackInput);
                 MessageBank.printMessageLog();
             } else {
+                System.out.println("You skip your turn...");
                 humanPlayer.skipTurn = false;
             }
 
@@ -107,8 +108,12 @@ public class GameController {
                 aiPlayer.launchAttack(humanPlayer, Ai.selectRandomPosition());
                 MessageBank.printMessageLog();
             } else {
+                System.out.println("The enemy skips their turn...");
                 aiPlayer.skipTurn = false;
             }
+
+            humanPlayer.printPlayerGrids();
+            System.out.println("Enemy boats left : " + aiPlayer.boatsLeft);
 
             if(humanPlayer.boatsLeft == 0) return false;
         }

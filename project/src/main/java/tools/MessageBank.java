@@ -41,11 +41,10 @@ public class MessageBank {
             
             i.e : 'a1' or 'j10'.\n""";
 
-    public static final String ENDING_MSG = """
-            Thank you for playing BATTLESHIP.
-            
-            All game logs have been stored in the following file :\s
-            """;
+    public static final String ENDING_MSG = "\n" +
+            "\n ---------------------------------" +
+            "Thank you for playing BATTLESHIP!\n\n" +
+            "All game logs have been stored in the following file : ";
 
     public static final String ERROR_IO = "ERROR : An IOException was encountered.";
     public static final String ERROR_FORMAT = "ERROR : Incorrect format.";

@@ -9,6 +9,7 @@ public class GameController {
 
     private Player humanPlayer;
     private Player aiPlayer;
+    public boolean mineMode = false;
 
     public GameController() {}
 
@@ -32,6 +33,11 @@ public class GameController {
         }
     }
 
+    public void askMineMode() {
+        System.out.print("Do you want to play with mines enabled? (y/n) : ");
+        mineMode = IoHandler.getInput().equals("y");
+    }
+
     /**
      * Handles the boat placement phase of the game.
      */
@@ -39,7 +45,7 @@ public class GameController {
         humanPlayer = new Player(true);
         aiPlayer = new Player(false);
 
-        System.out.print("Do you want your boats to be placed randomly? (y / n) : ");
+        System.out.print("Do you want your boats to be placed randomly? (y/n) : ");
         boolean randomlyPlace = IoHandler.getInput().equals("y");
 
         humanPlayer.printPlayerGrid();

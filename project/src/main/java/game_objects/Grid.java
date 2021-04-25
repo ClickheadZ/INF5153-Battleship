@@ -137,7 +137,6 @@ public class Grid {
     public void setTileHit(boolean hit, Position position) {
         if(grid[position.getCol()][position.getRow()].symbol != 'x') {
             grid[position.getCol()][position.getRow()].symbol = hit ? 'x' : 'o';
-            // TODO : replace hit empty tiles with '.' again for visibility?
         }
     }
 

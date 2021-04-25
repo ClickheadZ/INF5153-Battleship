@@ -40,10 +40,10 @@ public class Main {
         GameController gameController = new GameController();
 
         gameController.askDifficulty();
+        gameController.askMineMode();
 
         gameController.boatPlacementPhase();
-
-        gameController.minePlacementPhase();
+        if(gameController.mineMode) gameController.minePlacementPhase();
 
         gameController.battlePhase();
 

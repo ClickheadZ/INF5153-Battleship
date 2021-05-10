@@ -2,26 +2,73 @@
 'https://plantuml.com/class-diagram
 
 abstract class AbstractList
-abstract AbstractCollection
 interface List
-interface Collection
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+package CampDeJour {
+    abstract class Programme {
+        - description
+    }
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+    class ProgrammeClassique {
+    }
+    class ProgrammeArtsSciences {
+    }
+    class ProgrammeActif {
+    }
 
-class ArrayList {
-Object[] elementData
-size()
+    class Horaire {
+    }
+
+    class Session {
+    }
+
+    enum TypeActivite {
+        ART
+        SCIENCE
+        SPORT
+        AUTRE
+    }
+
+    class Activite {
+    }
+
+    class BlocActivite {
+    }
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+package GestionComptes {
+    class UsagerCompte {
+        -nom
+        -prenom
+        -courriel
+        -adresse
+        -dateNaissance
+        +ajouterEnfant
+    }
+
+    class Enfant {
+        -nom
+        -prenom
+        -dateNaissance
+    }
+
+    class Administrateur {
+    }
+
+    class Authentificateur {
+    }
+    class PanierAchat {
+    }
 }
+Programme <|.. ProgrammeClassique
+Programme <|.. ProgrammeArtsSciences
+Programme <|.. ProgrammeActif
+
+Activite -- TypeActivite
+
+Authentificateur - UsagerCompte
+Authentificateur -- Administrateur
+
+CampDeJour -[hidden]- GestionComptes
 
 @enduml

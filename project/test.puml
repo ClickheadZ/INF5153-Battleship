@@ -1,74 +1,7 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-interface List
-
-package CampDeJour {
-    abstract class Programme {
-        - description
-    }
-
-    class ProgrammeClassique {
-    }
-    class ProgrammeArtsSciences {
-    }
-    class ProgrammeActif {
-    }
-
-    class Horaire {
-    }
-
-    class Session {
-    }
-
-    enum TypeActivite {
-        ART
-        SCIENCE
-        SPORT
-        AUTRE
-    }
-
-    class Activite {
-    }
-
-    class BlocActivite {
-    }
+class classe {
 }
-
-package GestionComptes {
-    class UsagerCompte {
-        -nom
-        -prenom
-        -courriel
-        -adresse
-        -dateNaissance
-        +ajouterEnfant
-    }
-
-    class Enfant {
-        -nom
-        -prenom
-        -dateNaissance
-    }
-
-    class Administrateur {
-    }
-
-    class Authentificateur {
-    }
-    class PanierAchat {
-    }
-}
-Programme <|.. ProgrammeClassique
-Programme <|.. ProgrammeArtsSciences
-Programme <|.. ProgrammeActif
-
-Activite -- TypeActivite
-
-Authentificateur - UsagerCompte
-Authentificateur -- Administrateur
-
-CampDeJour -[hidden]- GestionComptes
 
 @enduml
